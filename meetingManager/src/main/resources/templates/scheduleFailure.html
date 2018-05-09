@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  <title>Schedule Fails!</title>
+  <link rel="shortcut icon" href="http://designshack.net/favicon.ico">
+  <link rel="icon" href="http://designshack.net/favicon.ico">
+  <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/response.css}">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <div id="w">
+    <div id="content">
+      <!-- Icons source http://dribbble.com/shots/913555-Flat-Web-Elements -->
+      <div class="notify successbox">
+        <h1>Fail!</h1>
+        <span class="alerticon"><img th:src="@{/img/error.png}" alt="checkmark" /></span>
+        <p>Sorry! Someone just gets ahead of you. Please select another available slot. </p>
+      </div>
+
+      <div style="display: table; margin: 0 auto;" class="btns clearfix">
+        <a th:href="${'/schedule/' + name + '/' + id}" id="newSuccessBox" class="flatbtn">Go Back to Reschedule</a>
+      </div>
+    </div><!-- @end #content -->
+  </div><!-- @end #w -->
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head th:include="head :: head">
+    <title>Create Meeting Type</title>
+</head>
+<!--<style>-->
+    <!--form {-->
+        <!--margin : 0 auto;-->
+        <!--width: 500px;-->
+        <!--height: 100px;-->
+        <!--padding-top: 30px;-->
+    <!--}-->
+
+<!--</style>-->
+<!--<link type="text/css" th:href="@{css/style.css}" rel="stylesheet">-->
+<link type="text/css" th:href="@{css/timepicki.css}" rel="stylesheet">
+
+<body>
+<div th:substituteby="navbar :: navbar"></div>
+<div class="container">
+    <section layout:fragment="content">
+        <form name="f" th:action="@{/addMeetingPrototype}" onsubmit="return validate();" method="POST">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="name">Meeting Title</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="e.g. Q&A Session">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" class="form-control" id="location" name="location" placeholder="e.g. Teer 213B">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="instruction">Instruction</label>
+                    <textarea class="form-control" id="instruction" name="instruction" rows="3" placeholder="e.g. Bring your laptop please."></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="url">Custom URL for this meeting:</label>
+                    <div style="display: inline-block" th:text="${url}"></div><input type="text" id="url" name="url">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="date">Date</label>
+                        <input type="date" class="form-control" id="date" name="date">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="startTime">startTime</label>
+                    <input id="startTime" type="text" name="startTime"/>
+                    <!--<input type="time" class="form-control" id="startTime" name="startTime">-->
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="endTime">endTime</label>
+                    <input id="endTime" type="text" name="endTime"/>
+                    <!--<input type="time" class="form-control" id="endTime" name="endTime">-->
+                </div>
+            </div>
+            <input type="hidden" id="slots" name="slots">
+            <div id='div1'></div>
+            <button type="button" onclick="myFunction()" class="btn btn-success">Add Time Period</button>
+            <!--<div class="form-row">-->
+                <!--<div class="form-group col">-->
+                    <!--<label for="slots">Time Availability</label>-->
+                    <!--<textarea class="form-control" id="slots" name="slots" rows="2" placeholder="e.g. Every Thursday 16:30 -18:30"></textarea>-->
+                <!--</div>-->
+            <!--</div>-->
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </section>
+</div>
+<!--<div th:substituteby="layout/footer :: footer"></div>-->
+<script>
+function validate() {
+  if(document.getElementById("date").value != ""){
+    var date = document.getElementById("date").value;
+    var start = document.getElementById("startTime").value;
+    var end = document.getElementById("endTime").value;
+    if(start >= end){
+      alert("Wrong Time Slot!");
+      return false;
+    }else{
+      document.getElementById("slots").value += date + "SPLIT" + start + "SPLIT" + end + ";;";
+    }
+  }
+  return true;
+}
+function myFunction() {
+    var date = document.getElementById("date").value;
+    var start = document.getElementById("startTime").value;
+    var end = document.getElementById("endTime").value;
+
+    if(start >= end){
+      alert("Wrong Time Slot!");
+    }else{
+      document.getElementById("date").value = '';
+      document.getElementById("startTime").value = '';
+      document.getElementById("endTime").value = '';
+      var printSlots = "date: " + date + " from:" + start + " to:" + end;
+      var para = document.createElement("p");
+      var node = document.createTextNode(printSlots);
+      para.appendChild(node);
+      var element = document.getElementById("div1");
+      element.appendChild(para);
+      document.getElementById("slots").value += date + "SPLIT" + start + "SPLIT" + end + ";;";
+    }
+}
+</script>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.min.js"></script>
+<script src="js/timepicki.js"></script>
+<script>
+	$('#startTime').timepicki();
+    $('#endTime').timepicki();
+    </script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

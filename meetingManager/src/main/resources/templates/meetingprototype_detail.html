@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head th:include="head :: head">
+    <title>Meeting Type Detail</title>
+</head>
+<body>
+<div th:substituteby="navbar :: navbar"></div>
+<div class="container">
+    <section layout:fragment="content">
+    </section>
+</div>
+<table class="table table-sm">
+    <!--<thead>-->
+    <tr>
+        <th scope="col">Meeting Name</th>
+        <td th:text="${meetingPrototype.name}"></td>
+    </tr>
+    <!--</thead>-->
+    <!--<tbody>-->
+    <tr>
+        <th scope="col">Meeting Location</th>
+        <td th:text="${meetingPrototype.location}"></td>
+    </tr>
+    <tr>
+        <th scope="col">Meeting Instruction</th>
+        <td th:text="${meetingPrototype.instruction}"></td>
+    </tr>
+    <tr>
+        <th scope="col">Available Time Slots</th>
+        <td th:each="slot : ${meetingPrototype.slots}">
+            <p th:text="${slot.startTime}"></p>
+            <p th:text="${slot.endTime}"></p>
+        </td>
+    </tr>
+    <!--</tbody>-->
+</table>
+<form name="f" th:action="@{/invite_people(id=${meetingPrototype.id})}", method="POST">
+    <input type="text" class="form-control" name="invitee_username">
+    <button type="submit" class="btn btn-primary">Invite User</button>
+</form>
+<form name="f" th:action="@{/invite_group(id=${meetingPrototype.id})}", method="POST">
+    <input type="text" class="form-control" name="invitee_groupname">
+    <button type="submit" class="btn btn-primary">Invite Group</button>
+</form>
+
+<!--<div th:substituteby="layout/footer :: footer"></div>-->
+</body>
+</html>

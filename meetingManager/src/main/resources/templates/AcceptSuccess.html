@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head th:include="head :: head">
+    <title>Exacode bootstrap</title>
+</head>
+<link rel="shortcut icon" href="http://designshack.net/favicon.ico">
+<link rel="icon" href="http://designshack.net/favicon.ico">
+<style>
+</style>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<body>
+<div th:substituteby="navbar :: navbar"></div>
+<div class="container">
+    <section layout:fragment="content">
+        <!-- Icons source http://dribbble.com/shots/913555-Flat-Web-Elements -->
+        <div class="notify successbox text-center">
+            <h1>Success!</h1>
+            <span class="alerticon"><img th:src="@{/img/check.png}" alt="checkmark" /></span>
+            <p>Thanks so much! You just successfully set up a meeting. </p>
+        </div>
+
+        <div style="display: table; margin: 0 auto;" class="btns clearfix">
+            <a class="btn btn-primary" href="/pending_invitations" role="button">Return</a>
+        </div>
+    </section>
+</div>
+<!--<div th:substituteby="layout/footer :: footer"></div>-->
+</body>
+</html>

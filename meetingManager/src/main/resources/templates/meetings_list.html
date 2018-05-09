@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head th:include="head :: head">
+    <title>Meeting List</title>
+</head>
+<body>
+<div th:substituteby="navbar :: navbar"></div>
+<div class="container">
+    <section layout:fragment="content">
+        <div id="includedContent"></div>
+        <div style="width: 80%; margin-top: 20px;" class="mx-auto">
+            <h1 th:text="${myname}"></h1>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Interviewee</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">End Time</th>
+                    <th scope="col">Message to You</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="meeting : ${meetings_list}">
+                    <td th:text="${meeting.meetingPrototype.name}"></td>
+                    <td th:text="${meeting.meetingPrototype.location}"></td>
+                    <td th:text="${meeting.contact}"></td>
+                    <td th:text="${meeting.startTime}"></td>
+                    <td th:text="${meeting.endTime}"></td>
+                    <td th:text="${meeting.message}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+<!--<div th:substituteby="layout/footer :: footer"></div>-->
+</body>
+</html>

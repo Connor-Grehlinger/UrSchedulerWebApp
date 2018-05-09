@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head th:include="head :: head">
+    <title>Exacode bootstrap</title>
+</head>
+<link type="text/css" th:href="@{/css/timepicki.css}" rel="stylesheet">
+<link type="text/css" th:href="@{/css/scheduleNoLogin.css}" rel="stylesheet">
+<style>
+.paper {
+  background-color: #203864;
+}
+.paper::before,
+.paper::after {
+  background-color: #203864;
+}
+body {
+   color: #FFFFFF;
+}
+</style>
+<body>
+<div th:substituteby="navbar :: navbar"></div>
+<div class="container">
+    <section layout:fragment="content">
+        <div class="paper" style="margin-top: 30px">
+            <h1 th:text="${'Start seting up a meeting with ' + name + '!'}"></h1>
+            <p class="title">What is this meeting about?</p>
+            <p class="contents" th:text="${prototype.name}"></p>
+            <p class="title">Where is it held?</p>
+            <p class="contents" th:text="${prototype.location}"></p>
+            <p class="title">Anything you should know?</p>
+            <p class="contents" th:text="${prototype.instruction}"></p>
+
+            <p class="title">When can it be held?</p>
+            <table>
+                <th:block th:each="slot : ${prototype.slots}">
+                    <tr>
+                        <td class="contents" th:text="${slot.date + ' '}"></td>
+                        <td class="contents" th:text="${'from ' + slot.startTime + ' to '}"></td>
+                        <td class="contents" th:text="${slot.endTime + '.  '}"></td>
+                    </tr>
+                </th:block>
+            </table>
+
+            <p class="title">Now, choose your time slot!</p >
+            <!--<form name="f" id="scheduleForm" th:action="@{/finalize_meeting(id=${prototype.id})}" method="POST">-->
+            <form name="f" id="scheduleForm" th:action="@{/finalize_meeting(id=${prototype.id})}" onsubmit="return validate();" method="POST">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="date">Date</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                    </div>
+                </div>
+                <!--<div class="form-row">-->
+                <!--<div class="form-group col-md-6">-->
+                <!--<label for="startTime">Start at: </label>-->
+                <!--<input type="time" class="form-control" id="startTime" name="startTime" required>-->
+                <!--</div>-->
+                <!--<div class="form-group col-md-6">-->
+                <!--<label for="endTime">End at: </label>-->
+                <!--<input type="time" class="form-control" id="endTime" name="endTime" required>-->
+                <!--</div>-->
+                <!--</div>-->
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="startTime">startTime</label>
+                        <input id="startTime" type="text" name="startTime" required/>
+                        <!--<input type="time" class="form-control" id="startTime" name="startTime">-->
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label for="endTime">endTime</label>
+                        <input id="endTime" type="text" name="endTime" required/>
+                        <!--<input type="time" class="form-control" id="endTime" name="endTime">-->
+                    </div>
+                </div>
+                <p class="title">Leave your message and contact info!</p>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <textarea class="form-control" rows="4" cols="70" id="message" name="message" placeholder="Leave something you want him to know prior to the meeting"></textarea>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+<!--<table class="table table-sm">-->
+    <!--&lt;!&ndash;<thead>&ndash;&gt;-->
+    <!--<tr>-->
+        <!--<th scope="col">Meeting Name</th>-->
+        <!--<td th:text="${meetingPrototype.name}"></td>-->
+    <!--</tr>-->
+    <!--&lt;!&ndash;</thead>&ndash;&gt;-->
+    <!--&lt;!&ndash;<tbody>&ndash;&gt;-->
+    <!--<tr>-->
+        <!--<th scope="col">Meeting Location</th>-->
+        <!--<td th:text="${meetingPrototype.location}"></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<th scope="col">Meeting Instruction</th>-->
+        <!--<td th:text="${meetingPrototype.instruction}"></td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<th scope="col">Available Time Slots</th>-->
+        <!--<td th:each="slot : ${meetingPrototype.slots}">-->
+            <!--<p th:text="${slot.startTime}"></p>-->
+            <!--<p th:text="${slot.endTime}"></p>-->
+        <!--</td>-->
+    <!--</tr>-->
+    <!--&lt;!&ndash;</tbody>&ndash;&gt;-->
+<!--</table>-->
+<!--<form name="f" th:action="@{/finalize_meeting(id=${meetingPrototype.id})}", method="POST">-->
+    <!--<div class="form-row">-->
+        <!--<div class="form-group col">-->
+            <!--<label for="startTime">startTime</label>-->
+            <!--<input type="datetime-local" class="form-control" id="startTime" name="startTime">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<button type="submit" class="btn btn-primary">Save</button>-->
+<!--</form>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+  var starts = [];
+  var ends = [];
+  [# th:each="n : ${prototype.slots}"]
+  starts.push(new Date("[(${n.date})]" + " " + "[(${n.startTime})]"));
+  ends.push(new Date("[(${n.date})]" + " " + "[(${n.endTime})]"));
+  [/]
+  console.log(dates.length);
+  function validate() {
+    var date = document.getElementById("date").value;
+    var start = document.getElementById("startTime").value;
+    var end = document.getElementById("endTime").value;
+    var startDateTime = new Date(date + " " + start);
+    var endDateTime = new Date(date + " " + end);
+    if(startDateTime >= endDateTime){
+      alert("Whoops! You scheduled an invald time period!");
+      return false;
+    }
+    var check = false;
+    for(var i = 0; i < starts.length; i++){
+        if(startDateTime > starts[i] && endDateTime < ends[i]){
+          check = true;
+          break;
+        }
+    }
+    if(!check){
+      alert("Whoops! You scheduled an invald time period!");
+    }
+    return check; // return false to cancel form action
+  }
+  </script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/timepicki.js}"></script>
+<script>
+	$('#startTime').timepicki();
+    $('#endTime').timepicki();
+    </script>
+<!--<div th:substituteby="layout/footer :: footer"></div>-->
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head th:include="head :: head">
+    <title>Schedule</title>
+</head>
+<link type="text/css" th:href="@{/css/timepicki.css}" rel="stylesheet">
+<link type="text/css" th:href="@{/css/scheduleNoLogin.css}" rel="stylesheet">
+
+<body>
+<div class="paper">
+    <h1 th:text="${'Start seting up a meeting with ' + name + '!'}"></h1>
+    <p class="title">What is this meeting about?</p>
+    <p class="contents" th:text="${prototype.name}"></p>
+    <p class="title">Where is it held?</p>
+    <p class="contents" th:text="${prototype.location}"></p>
+    <p class="title">Anything you should know?</p>
+    <p class="contents" th:text="${prototype.instruction}"></p>
+
+    <p class="title">When can it be held?</p>
+    <table>
+        <th:block th:each="slot : ${prototype.slots}">
+            <tr>
+                <td class="contents" th:text="${slot.date + ' '}"></td>
+                <td class="contents" th:text="${'from ' + slot.startTime + ' to '}"></td>
+                <td class="contents" th:text="${slot.endTime + '.  '}"></td>
+            </tr>
+        </th:block>
+    </table>
+
+    <p class="title">Now, choose your time slot!</p >
+    <form name="f" id="scheduleForm" th:action="@{'/schedule/' + ${name} + '/' + ${id}}" onsubmit="return validate();" method="POST">
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="date">Date</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+        </div>
+        <!--<div class="form-row">-->
+        <!--<div class="form-group col-md-6">-->
+        <!--<label for="startTime">Start at: </label>-->
+        <!--<input type="time" class="form-control" id="startTime" name="startTime" required>-->
+        <!--</div>-->
+        <!--<div class="form-group col-md-6">-->
+        <!--<label for="endTime">End at: </label>-->
+        <!--<input type="time" class="form-control" id="endTime" name="endTime" required>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="startTime">startTime</label>
+                <input id="startTime" type="text" name="startTime" required/>
+                <!--<input type="time" class="form-control" id="startTime" name="startTime">-->
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="endTime">endTime</label>
+                <input id="endTime" type="text" name="endTime" required/>
+                <!--<input type="time" class="form-control" id="endTime" name="endTime">-->
+            </div>
+        </div>
+        <p class="title">Leave your message and contact info!</p>
+        <div class="form-row">
+            <div class="form-group col">
+                <textarea class="form-control" rows="4" cols="70" id="message" name="message" placeholder="Leave something you want him to know prior to the meeting"></textarea>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="checkbox" required>
+                <label class="form-check-label" for="checkbox">
+                    I understand this meeting request is non-revokable and will take it seriously.
+                </label>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" th:inline="javascript">
+  var starts = [];
+  var ends = [];
+  [# th:each="n : ${prototype.slots}"]
+  starts.push(new Date("[(${n.date})]" + " " + "[(${n.startTime})]"));
+  ends.push(new Date("[(${n.date})]" + " " + "[(${n.endTime})]"));
+  [/]
+  console.log(dates.length);
+  function validate() {
+    var date = document.getElementById("date").value;
+    var start = document.getElementById("startTime").value;
+    var end = document.getElementById("endTime").value;
+    var startDateTime = new Date(date + " " + start);
+    var endDateTime = new Date(date + " " + end);
+    if(startDateTime >= endDateTime){
+      alert("Whoops! You scheduled an invald time period!");
+      return false;
+    }
+    var check = false;
+    for(var i = 0; i < starts.length; i++){
+        if(startDateTime > starts[i] && endDateTime < ends[i]){
+          check = true;
+          break;
+        }
+    }
+    if(!check){
+      alert("Whoops! You scheduled an invald time period!");
+    }
+    return check; // return false to cancel form action
+  }
+  </script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/timepicki.js}"></script>
+<script>
+	$('#startTime').timepicki();
+    $('#endTime').timepicki();
+    </script>
+<!--<script src="@{js/bootstrap.min.js}"></script>-->
+</body>
+</html>

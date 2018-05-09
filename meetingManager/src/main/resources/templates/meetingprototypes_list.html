@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head th:include="head :: head">
+    <title>Meeting Type List</title>
+</head>
+<body>
+<div th:substituteby="navbar :: navbar"></div>
+<div class="container">
+    <section layout:fragment="content">
+        <div id="includedContent"></div>
+        <div style="width: 80%; margin-top: 20px;" class="mx-auto">
+            <h1 th:text="${myname}"></h1>
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Location</th>
+                    <!--<th scope="col">Finalize</th>-->
+                    <th scope="col">Invitee Username</th>
+                    <th scope="col">Invitee Groupname</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="meetingprototype : ${meetingprototypes_list}">
+                    <td>
+                        <a th:text="${meetingprototype.name}" th:href="@{/meetingprototype_detail(id=${meetingprototype.id})}"></a>
+                    </td>
+                    <td th:text="${meetingprototype.location}"></td>
+                    <!--<td>-->
+                        <!--<a th:href="@{/finalize_meeting(id=${meetingprototype.id})}">Finalize A Meeting</a>-->
+                    <!--</td>-->
+                    <td>
+                        <form name="f" th:action="@{/invite_people(id=${meetingprototype.id})}", method="POST">
+                            <input type="text" class="form-control" name="invitee_username">
+                            <button type="submit" class="btn btn-primary">Invite User</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form name="f" th:action="@{/invite_group(id=${meetingprototype.id})}", method="POST">
+                            <input type="text" class="form-control" name="invitee_groupname">
+                            <button type="submit" class="btn btn-primary">Invite Group</button>
+                        </form>
+                    </td>
+                    <!-- <td th:text="${type.slots}"></td> -->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+<!--<div th:substituteby="layout/footer :: footer"></div>-->
+</body>
+</html>

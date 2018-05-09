@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head th:include="head :: head">
+    <title>My Group</title>
+</head>
+<body>
+<div th:substituteby="navbar :: navbar"></div>
+<div class="container">
+    <section layout:fragment="content">
+        <div style="text-align: center; margin-top: 20px;">
+        Create a New Group:
+        <form name="f" th:action="@{/create_group}", method="POST">
+            <input type="text" class="form-control" name="group_name" style="width:50%; display: inline-block;">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+        </div>
+        <div style="width: 80%; margin-top: 20px;" class="mx-auto">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Group Name</th>
+                    <th scope="col">Members</th>
+                    <th scope="col">Add Member</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="group : ${my_groups}">
+                    <td th:text="${group.name}"></td>
+                    <td>
+                        <p th:each="member : ${group.members}" th:text="${member.username}"></p>
+                    </td>
+                    <td>
+                        <form name="f" th:action="@{/add_people_into_group(id=${group.id})}", method="POST">
+                            <input type="text" class="form-control" name="member_username">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+                    </td>
+                    <!-- <td th:text="${type.slots}"></td> -->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+<!--<div th:substituteby="layout/footer :: footer"></div>-->
+</body>
+</html>

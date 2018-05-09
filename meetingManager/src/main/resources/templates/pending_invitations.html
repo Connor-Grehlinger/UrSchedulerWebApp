@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head th:include="head :: head">
+    <title>Pending Invitations</title>
+</head>
+<body>
+<div th:substituteby="navbar :: navbar"></div>
+<div class="container">
+    <section layout:fragment="content">
+        <div id="includedContent"></div>
+        <div style="width: 80%; margin-top: 20px;" class="mx-auto">
+            <table class="table">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Accept</th>
+                    <th scope="col">Reject</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="meeting : ${pending_meetings}">
+                    <td th:text="${meeting.meetingPrototype.name}"></td>
+                    <td>
+                        <a class="btn btn-primary" th:href="@{/finalize_meeting(id=${meeting.meetingPrototype.id})}" role="button">Accept</a>
+                    </td>
+                    <td>
+                        <form th:action="@{/reject_meeting(id=${meeting.meetingPrototype.id})}" method="POST">
+                            <button type="submit" class="btn btn-danger">Reject</button>
+                        </form>
+                    </td>
+                    <!-- <td th:text="${type.slots}"></td> -->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+<!--<div th:substituteby="layout/footer :: footer"></div>-->
+</body>
+</html>

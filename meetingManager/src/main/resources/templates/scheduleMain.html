@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<table>
+    <tr th:each="type : ${type_list}">
+        <td><a th:href="${'/schedule/' + name + '/' + type.url}" th:text="${type.name}"></a></td>
+    </tr>
+</table>
+</body>
+</html>
