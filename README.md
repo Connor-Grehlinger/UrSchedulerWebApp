@@ -1,4 +1,5 @@
 <p align="center"><img src="images/UrScheduler_logo.png" width = 250/></p>
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Spring Boot](#spring-boot)
@@ -8,8 +9,10 @@
 - [Run](#run)
 - [Useful Resources](#useful-resources)
 
+
 ## Introduction   
 In modern days, people are spending more and more time in different meetings in both formal and casual settings. However, the process of setting up a meeting via phone call or email is usually time-consuming and inefficient. That’s where our web application, UrScheduler, comes into play. Using the UrScheduler web application, meetings can be easily set up by simply clicking a link.   
+
 
 ## Spring Boot  
 We are using [Spring Boot](https://projects.spring.io/spring-boot/) framework for this application, which is built by [Maven](https://maven.apache.org/). When using Maven, it is easy to manage dependencies for Java Project. There are totally three dependencies we are using right now:   
@@ -82,3 +85,4 @@ This is a CheatSheet for writing Markdown file.
 
 - [Markdown Documentation](https://docs.gitlab.com/ee/user/markdown.html)
 This is the official documentation of Markdown file for GitLab.
+
