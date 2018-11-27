@@ -15,7 +15,7 @@ In modern days, people are spending more and more time in different meetings in 
 
 
 ## Spring Boot  
-We are using [Spring Boot](https://projects.spring.io/spring-boot/) framework for this application, which is built by [Maven](https://maven.apache.org/). When using Maven, it is easy to manage dependencies for Java Project. There are totally three dependencies we are using right now:   
+We are using the [Spring Boot](https://projects.spring.io/spring-boot/) framework for this application, which is built by [Maven](https://maven.apache.org/). When using Maven, it is easy to manage dependencies for any Java Project. There are three dependencies used by the UrScheduler web application:   
 - Web  
 Full-stack web development with Tomcat and Spring MVC
 
@@ -28,7 +28,7 @@ Thymeleaf templating engine, including integration with Spring
 - Security  
 Secure your application via spring-security
 
-The scaffold of this application is built by [Spring Initializr](https://start.spring.io/). In the directory, `models` folder contains models `controllers` contains all the controllers. The `repositories` folder contains interfaces in charge of interaction between controllers and mongodb. The front-end views are stored at `src/main/resources/templates`. And the url routing is set in controller. The dependencies will be set up in `pom.xml`. When a HTTP request is received, it will be dispatched and sent to a method in controller layer and after interaction with database, the controller will indicate the corresponding html file for rendering the view and return a model which contains the contents shown on the html page. In our application, Thymeleaf will be used for rendering the webpage.
+The scaffold of this application is built by [Spring Initializr](https://start.spring.io/). In the directory, the `models` folder contains the web app's data models, and the `controllers` directory contains all the web app's controllers. The `repositories` directory contains interfaces in charge of interaction between the web app's controllers and mongodb. The front-end views are stored at `src/main/resources/templates`, and url routing is managed by the web app's controller. The dependencies will be set up in `pom.xml`. When an HTTP request is received, it will be dispatched and sent to a method in the controller layer and after interaction with database, the controller will indicate the corresponding html file for rendering the view and return a model which contains the contents shown on the html page. In our application, Thymeleaf will be used for rendering the webpage.
 
 ## MongoDB  
 For this application, [MongoDB](https://www.mongodb.com/), a NoSQL Database is used. It provides much more flexibility compared to relational database. And the collections is the database are:  
@@ -41,16 +41,16 @@ Term explained:
 - `meetingType`: `{id, name, location, instruction, slots, url, creator}`  
 
 ## Thymeleaf  
-Thymeleaf is a Java XML/XHTML/HTML5 template engine that can work both in web and non-web environments. One major effect of importing Thymeleaf in our applications is that we will use `.html` file for front-end views instead of `.jsp` file. The difference and more information is quoted as following:  
+Thymeleaf is a Java XML/XHTML/HTML5 template engine that can work both in web and non-web environments. One major effect of importing Thymeleaf in our applications is that it allows us to use `.html` files for front-end views instead of `.jsp` files. That difference and more information is quoted as following:  
 >Traditionally, Spring MVC applications used Java Server Pages, or JSPs to generate html content. JSPs are a mature technology and has been around since the early days of Java. In terms of raw speed, JSPs are hard to beat too. But when you do not need the absolute raw speed of a JSP, you may want to consider alternatives to JSPs which help improve developer productivity.
 >
 >JSPs offer an HTML ‘like’ syntax. Meaning its close, but not completely compatible with HTML. Thymeleaf on the other hand, aims to be a “Natural Template”. This means the Thymeleaf template file will open and display normally in a browser, while a JSP file does not.  
 
 ## Security
-Security is the dependency used for user authentication. Currently, our application uses spring-security 5. One thing about spring-security 5 is that it requires that all passwords stored needs to be **encoded**. So we import `BCryptPasswordEncoder` to do the encoding job for us.
+Security is the dependency used for user authentication. Currently, our application uses spring-security 5. A key feature of spring-security 5 is that it requires that all passwords stored be **encoded**. So we import `BCryptPasswordEncoder` to do the encoding job for us (using well-vetted cryptography libraries and hashing passwords (with salt) is key to a secure web application).
 
 ## Run   
-To run the application, one needs to first download the project (which is a maven project). Both `Maven` and `MongoDB` can be easily installed via `Homebrew` on a Mac Machine. For simplicity, mongodb should be launched prior to the launch of our application. To do so, just do `mongod` command. If one has a preferable IDE (`Eclipse` or `Intellij`), he will need to import this project. To launch the application, one can run the main java file `MeetingManagerApplication`. Or he can run `mvn spring-boot:run` command under the **root directory** of the application. Finally, open `http://localhost:8080` on the browser. If successful, there should be some prompt like `connection accepted from <some IP Address>` and `received client metadata from <some IP Address>` in the mongodb console, meaning that the application is connected to the local mongodb.
+To run the application, first download the project and install its dependencies. Both `Maven` and `MongoDB` can be easily installed via `Homebrew` on a Mac. For simplicity, mongodb should be launched prior to the launch of our application. To do so, just run the `mongod` command in the terminal (make sure you follow mongodb's documentation and configure your environment first (you may have to create a /data directory with appropriate permissions). If one has a preferable IDE (`Eclipse` or `Intellij`), he will need to import this project. To launch the application, you can run the main java file `MeetingManagerApplication`. Or you can run the `mvn spring-boot:run` command under the **root directory** of the application. Finally, open `http://localhost:8080` on a web browser. If successful, there should be some prompt like `connection accepted from <some IP Address>` and `received client metadata from <some IP Address>` in the mongodb console, meaning that the application is connected to the local mongo database.
 
 ## Useful Resources  
 - [Spring: A Head Start](https://medium.com/omarelgabrys-blog/spring-a-head-start-introduction-part-1-130aa1b41e47)  
